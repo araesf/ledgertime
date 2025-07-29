@@ -4,31 +4,34 @@ import (
 	"time"
 )
 
-// Transaction represents a double-entry ledger transaction
+// Transaction represents a financial transaction in the ledger
 type Transaction struct {
-	ID          string    `json:"id" db:"id"`
-	Timestamp   time.Time `json:"timestamp" db:"timestamp"`
-	Description string    `json:"description" db:"description"`
-	Reference   string    `json:"reference,omitempty" db:"reference"` // Card number, invoice ID, etc.
-	Entries     []Entry   `json:"entries"`
+	ID           string    `json:"id" db:"id"`
+	UserID       string    `json:"user_id" db:"user_id"`
+	CardID       string    `json:"card_id" db:"card_id"`
+	Amount       int64     `json:"amount" db:"amount"` // Amount in cents
+	MerchantName string    `json:"merchant_name" db:"merchant_name"`
+	Category     string    `json:"category" db:"category"`
+	Description  string    `json:"description" db:"description"`
+	Status       string    `json:"status" db:"status"` // pending, completed, failed
+	Timestamp    time.Time `json:"timestamp" db:"timestamp"`
+	CreatedAt    time.Time `json:"created_at" db:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at" db:"updated_at"`
 }
 
-// Entry represents a single debit or credit entry in a transaction
-type Entry struct {
-	ID            string `json:"id" db:"id"`
-	TransactionID string `json:"transaction_id" db:"transaction_id"`
-	AccountID     string `json:"account_id" db:"account_id"`
-	Amount        int64  `json:"amount" db:"amount"` // Amount in cents to avoid floating point issues
-	Type          string `json:"type" db:"type"`     // "debit" or "credit"
-	Description   string `json:"description,omitempty" db:"description"`
-}
+// TransactionStatus constants
+const (
+	TransactionStatusPending   = "pending"
+	TransactionStatusCompleted = "completed"
+	TransactionStatusFailed    = "failed"
+)
 
-// CardPayload represents the raw data coming from card transactions
-// This will be transformed into a Transaction
-type CardPayload struct {
-	CardNumber   string `json:"card_number"`
-	Name         string `json:"name"`
-	PurchaseDate string `json:"purchase_date"`
-	Price        int    `json:"price"` // Price in cents
-	ObjectBought string `json:"object"`
+// TransactionSummary represents aggregated transaction data
+type TransactionSummary struct {
+	UserID      string `json:"user_id"`
+	TotalAmount int64  `json:"total_amount"`
+	TotalCount  int    `json:"total_count"`
+	AvgAmount   int64  `json:"avg_amount"`
+	TopCategory string `json:"top_category"`
+	TopMerchant string `json:"top_merchant"`
 }
