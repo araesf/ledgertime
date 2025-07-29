@@ -1,38 +1,26 @@
-# Ledgertime - Modern Go Financial Ledger System
+# Ledgertime - Fintech Transaction API
 
-A production-ready financial ledger system built with Go, featuring card transaction processing, Kafka event streaming, and PostgreSQL persistence.
+A lightweight Go API for processing financial transactions with fraud detection and balance management.
 
-## 🏗️ Architecture
+## 🏦 Features
 
-This system demonstrates modern Go backend development patterns:
+- **User Management**: Create users with account balances
+- **Transaction Processing**: Process payments with fraud detection
+- **Balance Tracking**: Real-time balance updates
+- **RESTful API**: Clean HTTP endpoints
+- **In-Memory Storage**: Fast transaction processing
 
-- **Microservices Architecture**: Separate API server and Kafka consumer services
-- **Event-Driven Design**: Kafka for asynchronous transaction processing
-- **Clean Architecture**: Separation of concerns with internal packages
-- **Database Integration**: PostgreSQL with proper connection pooling
-- **Structured Logging**: JSON-based logging with contextual information
-- **Configuration Management**: Environment-based configuration
-- **Graceful Shutdown**: Proper resource cleanup and signal handling
+## 🚀 Quick Start
 
-## 📁 Project Structure
+```bash
+# Run locally
+go run main.go
 
+# Or with Docker
+docker-compose up --build
 ```
-ledgertime/
-├── cmd/                    # Application entry points
-│   ├── api/               # HTTP API server
-│   └── consumer/          # Kafka consumer service
-├── internal/              # Private application code
-│   ├── api/               # HTTP handlers and server
-│   ├── config/            # Configuration management
-│   ├── db/                # Database operations
-│   ├── kafka/             # Kafka producer/consumer
-│   ├── ledger/            # Core business logic
-│   └── models/            # Data models
-├── pkg/                   # Public libraries
-│   └── logger/            # Structured logging
-├── docker-compose.yml     # Development environment
-└── go.mod                 # Go module definition
-```
+
+API runs on `http://localhost:8080`
 
 ## 🚀 Features
 
